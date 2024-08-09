@@ -79,6 +79,14 @@ class Luvit < Formula
   end
 
   def install
+    if DevelopmentTools.clang_build_version >= 1500
+      # Work around build error in current `lua-openssl` resource with newer Clang
+      ENV.append_to_cflags "-Wno-incompatible-function-pointer-types"
+      # Use ld_classic to work around 'ld: multiple errors: LINKEDIT overlap of start of
+      # LINKEDIT and symbol table in '.../jitted_tmp/src/lua/luvibundle.lua_luvi_generated.o'
+      ENV.append "LDFLAGS", "-Wl,-ld_classic"
+    end
+
     ENV["PREFIX"] = prefix
     luajit = Formula["luajit"]
     luv = Formula["luv"]
@@ -93,8 +101,8 @@ class Luvit < Formula
       # Reported in the issue linked above.
       ENV["LPEGLIB_DIR"] = "deps/lpeg"
 
-      Pathname("deps/lua-openssl").tap(&:rmtree)
-                                  .install resource("lua-openssl")
+      rm_r "deps/lua-openssl"
+      Pathname("deps/lua-openssl").install resource("lua-openssl")
 
       # CMake flags adapted from
       # https://github.com/luvit/luvi/blob/#{luvi_version}/Makefile#L73-L74
