@@ -2365,6 +2365,7 @@ repo
 reposurgeon
 reproc
 restic
+restview
 resvg
 retire
 revive
