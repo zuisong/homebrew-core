@@ -2409,6 +2409,7 @@ ronn-ng
 root
 rosa-cli
 rospo
+roswell
 rover
 roxctl
 rpg-cli
