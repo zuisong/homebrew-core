@@ -20,7 +20,7 @@ class FlowCli < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "6c81c31f08d4d45834be1a873db8b17488bacdf7dd41340ba165964a72a00e8d"
   end
 
-  depends_on "go@1.25" => :build
+  depends_on "go" => :build
 
   conflicts_with "flow", because: "both install `flow` binaries"
 
