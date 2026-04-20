@@ -1,8 +1,8 @@
 class VapoursynthBm3d < Formula
   desc "BM3D denoising filter for VapourSynth"
   homepage "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D"
-  url "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D/archive/refs/tags/r9.tar.gz"
-  sha256 "3eb38c9e4578059042c96b408f5336b18d1f3df44896954713532cff735f1188"
+  url "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D/archive/refs/tags/r10.tar.gz"
+  sha256 "3582f8c0aa00c710b4d4d484da2716207f2e1f305124a9c365fc7530461c25f3"
   license "MIT"
   head "https://github.com/HomeOfVapourSynthEvolution/VapourSynth-BM3D.git", branch: "master"
 
@@ -24,9 +24,11 @@ class VapoursynthBm3d < Formula
   def install
     # Upstream build system wants to install directly into vapoursynth's libdir and does not respect
     # prefix, but we want it in a Cellar location instead.
-    inreplace "meson.build",
-              "install_dir : join_paths(vapoursynth_dep.get_pkgconfig_variable('libdir'), 'vapoursynth'),",
-              "install_dir : '#{lib}/vapoursynth',"
+    inreplace "meson.build" do |s|
+      s.gsub!(/^incdir = include_directories\(.*?^\)/m,
+              "incdir = include_directories('#{Formula["vapoursynth"].opt_include}/vapoursynth', 'include')")
+      s.gsub! "install_dir: py.get_install_dir() / 'vapoursynth/plugins'", "install_dir: '#{lib}/vapoursynth'"
+    end
 
     system "meson", "setup", "build", *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
