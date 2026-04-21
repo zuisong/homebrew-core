@@ -1,8 +1,8 @@
 class Opencode < Formula
   desc "AI coding agent, built for the terminal"
   homepage "https://opencode.ai"
-  url "https://registry.npmjs.org/opencode-ai/-/opencode-ai-1.4.10.tgz"
-  sha256 "0e1cb037f8eb9176e6ebed94bd725a5516176c393eaa3840ed52bc8bfea59a64"
+  url "https://registry.npmjs.org/opencode-ai/-/opencode-ai-1.14.20.tgz"
+  sha256 "843679b137cb587c9b98d7388bca867957d06e01237d9d70a247a99af4fc0716"
   license "MIT"
 
   livecheck do
@@ -24,15 +24,6 @@ class Opencode < Formula
   def install
     system "npm", "install", *std_npm_args
     bin.install_symlink libexec.glob("bin/*")
-
-    # Remove binaries for other architectures, `-musl`, `-baseline`, and `-baseline-musl`
-    arch = Hardware::CPU.arm? ? "arm64" : "x64"
-    os = OS.linux? ? "linux" : "darwin"
-    (libexec/"lib/node_modules/opencode-ai/node_modules").children.each do |d|
-      next unless d.directory?
-
-      rm_r d if d.basename.to_s != "opencode-#{os}-#{arch}"
-    end
   end
 
   test do
