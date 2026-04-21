@@ -29,6 +29,7 @@
   "mariadb@11.4",
   "mariadb@11.8",
   "nsd",
+  "numkong",
   "nss",
   "onnxruntime",
   "openblas",
