@@ -1,11 +1,11 @@
 class Openrtsp < Formula
   desc "Command-line RTSP client"
   homepage "http://www.live555.com/openRTSP"
-  url "https://download.live555.com/live.2026.04.01.tar.gz"
-  mirror "https://download.videolan.org/pub/videolan/testing/contrib/live555/live.2026.04.01.tar.gz"
-  mirror "https://pkg.freebsd.org/ports-distfiles/live.2026.04.01.tar.gz"
+  url "https://download.live555.com/live.2026.04.22.tar.gz"
+  mirror "https://download.videolan.org/pub/videolan/testing/contrib/live555/live.2026.04.22.tar.gz"
+  mirror "https://pkg.freebsd.org/ports-distfiles/live.2026.04.22.tar.gz"
   # Keep a mirror as upstream tarballs are removed after each version
-  sha256 "dc84af6faec5342029501a8abe441dcbe0796e29a67a7ad0d61b1a242b2724c3"
+  sha256 "1ffd626ce2e2473196e55a473b7b5ba056326eeabf8fd5622cea6b123d8b6370"
   license "LGPL-3.0-or-later"
 
   livecheck do
@@ -23,14 +23,6 @@ class Openrtsp < Formula
   end
 
   depends_on "openssl@3"
-
-  # Support CXXFLAGS when building on macOS
-  # PR ref: https://github.com/rgaufman/live555/pull/46
-  # TODO: Remove once changes land in a release
-  patch do
-    url "https://github.com/rgaufman/live555/commit/16701af5486bb3a2d25a28edaab07789c8a9ce57.patch?full_index=1"
-    sha256 "2d98a782081028fe3b7daf6b2db19e99c46f0cadab2421745de907146a3595cb"
-  end
 
   def install
     # "test" was added to std::atomic_flag in C++20
