@@ -41,6 +41,9 @@ class MongoCDriver < Formula
 
     (pkgshare/"libbson").install "src/libbson/examples"
     (pkgshare/"libmongoc").install "src/libmongoc/examples"
+
+    (opt_include/"bson").install_symlink include/"bson-#{version.major_minor_patch}"
+    (opt_include/"mongoc").install_symlink include/"mongoc-#{version.major_minor_patch}"
   end
 
   test do
