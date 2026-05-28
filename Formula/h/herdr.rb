@@ -21,15 +21,6 @@ class Herdr < Formula
   def install
     ENV.prepend_path "PATH", Formula["zig@0.15"].opt_bin
 
-    # Avoid building the unused macOS xcframework for the vendored terminal library.
-    # upstream pr, https://github.com/ogulcancelik/herdr/pull/286
-    inreplace "build.rs",
-      '.arg(format!("-Dversion-string={version_string}"))',
-      <<~RUST
-        .arg(format!("-Dversion-string={version_string}"))
-        .arg("-Demit-xcframework=false")
-      RUST
-
     system "cargo", "install", *std_cargo_args
   end
 
